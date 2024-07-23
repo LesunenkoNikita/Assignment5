@@ -49,3 +49,26 @@ string infixToPostfix(string infix) {
     }
     return postfix;
 }
+
+double evaluatePostfix(string postfix) {
+    stack<double> operands;
+    istringstream tokens(postfix);
+    string token;
+
+    while (tokens >> token) {
+        if (isdigit(token[0])) {
+            operands.push(stod(token));
+        }
+        else {
+            double numR = operands.top(); operands.pop();
+            double numL = operands.top(); operands.pop();
+            switch (token[0]) {
+            case '+': operands.push(numL + numR); break;
+            case '-': operands.push(numL - numR); break;
+            case '*': operands.push(numL * numR); break;
+            case '/': operands.push(numL / numR); break;
+            }
+        }
+    }
+    return operands.top();
+}
