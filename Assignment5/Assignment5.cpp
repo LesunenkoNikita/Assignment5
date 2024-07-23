@@ -9,11 +9,19 @@ class Calculator {
 public:
     void calc() {
         string input;
-        cout << "Enter an arithmetic expression, separated by spaces: ";
+        cout << "Enter an arithmetic expression, separated by spaces or a function: ";
         getline(cin, input);
-        string postfix = infixToPostfix(input);
-        double result = evaluatePostfix(postfix);
-        cout << result << endl;
+        if (input[0] == 'm')
+        {
+            double result = minMax(input);
+            cout << result << endl;
+        }
+        else
+        {
+            string postfix = infixToPostfix(input);
+            double result = evaluatePostfix(postfix);
+            cout << result << endl;
+        }
     }
 
 private:
@@ -82,6 +90,59 @@ private:
             }
         }
         return operands.top();
+    }
+    double minMax(string line)
+    {
+        int i = 4;
+        string num1;
+        string num2;
+        while (1)
+        {
+            if (line[i] != ',')
+            {
+                num1 += line[i];
+                i++;
+            }
+            else
+            {
+                i += 2;
+                break;
+            }
+        }
+        while (1)
+        {
+            if (line[i] == ')')
+            {
+                break;
+            }
+            else
+            {
+                num2 += line[i];
+                i++;
+            }
+        }
+        if (line[1] == 'i')
+        {
+            if (stod(num1) < stod(num2)) 
+            {
+                return stod(num1);
+            }
+            else
+            {
+                return stod(num2);
+            }
+        }
+        else
+        {
+            if (stod(num1) > stod(num2))
+            {
+                return stod(num1);
+            }
+            else
+            {
+                return stod(num2);
+            }
+        }
     }
 };
 
